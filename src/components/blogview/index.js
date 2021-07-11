@@ -1,15 +1,6 @@
 import React from 'react';
 import {  connect, useDispatch } from 'react-redux'
 
-// const BlogView = (props) => {
-//     return (
-//         <div>
-//             I am blog view {props.selectedBlog}
-//         </div>
-//     );
-// };
-
-// import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -39,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 
 function BlogView(props) {
 
-    console.log("Data", Data.comments)
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
 
@@ -47,10 +37,11 @@ function BlogView(props) {
     setSpacing(Number(event.target.value));
   };
 
+  if(props.selectedBlog)
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
-      <h1 style={{fontSize:'50px'   }}>This is article on topic {props.selectedBlog}</h1>
+      <h1 style={{fontSize:'50px'   }}>This is article on topic {props.selectedBlog.title} </h1>
 
         <Grid container justify="center" spacing={spacing}>
          <p>Articles are words that define a noun as specific or unspecific. Consider the following examples:
@@ -79,7 +70,7 @@ By using the article a, we’ve created a general statement, implying that any c
 
 
 const mapStateToProps = (state) => {
-    console.log("selectedBlog......", state.blogReducer.selectedBlog)
+  console.log(state.blogReducer.selectedBlog)
     return {
         selectedBlog: state.blogReducer.selectedBlog,      
     };

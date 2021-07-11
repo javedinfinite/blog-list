@@ -15,11 +15,15 @@ import Container from '@material-ui/core/Container';
 import StarIcon from '@material-ui/icons/Star';
 import { Link } from 'react-router-dom'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import CreateBlog from "./CreateBlog"
 
 import {  connect, useDispatch } from 'react-redux'
 import { getBlogList, getBlog } from "../../actions/blogAction";
 
 const useStyles = makeStyles((theme) => ({
+
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -49,14 +53,32 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  floating:{
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
+  }
 }));
 
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function Bloglist(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true)
+  const [openDialogue, setopenDialogue] = useState(false)
+
+
+  const createBlog = () => {
+    setopenDialogue(true)
+  }
+
+  const toggleDialogue = (value) =>{
+    setopenDialogue(value)
+  }
 
   useEffect(()=>{
     dispatch(getBlogList());
@@ -64,7 +86,6 @@ function Bloglist(props) {
   },[])
 
   const setSelectedBlog = (blogId) =>{
-    console.log('clicked')
     dispatch(getBlog(blogId))
   }
 
@@ -74,9 +95,10 @@ function Bloglist(props) {
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
+            <CreateBlog  open={openDialogue} toggleDialogue={toggleDialogue}/>
             <Grid container spacing={4}>
-            {props.blogList.map((card, index) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {props.blogList.map((blog, index) => (
+              <Grid item key={blog.key} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
@@ -85,19 +107,19 @@ function Bloglist(props) {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                       My Article {card}
+                       {blog.data.title}
                     </Typography>
                     <Typography>
-                      This article is about topic{card}
+                      This article is about topic {blog.data.title}
                     </Typography>
                     
                   </CardContent>
                   <CardActions>
-                  <Button   color="primary" size="small" onClick={()=>setSelectedBlog(card)} component={Link} to="/viewblog" autoFocus>
+                  <Button   color="primary" size="small" onClick={()=>setSelectedBlog(blog.key)} component={Link} to="/viewblog" autoFocus>
                       View   Blog
                     </Button>
                     <Typography>
-                      11/7/2021  
+                      {blog.data.date}
                     </Typography>
                     <Button size="small" color="primary">
                       <StarIcon  style={{ fontSize: 12, color:'green' }}/>  
@@ -111,13 +133,17 @@ function Bloglist(props) {
               </Grid>
             ))}
           </Grid>
+          <div className={classes.floating}> 
+            <Fab onClick={createBlog} color="primary" aria-label="add">
+              <AddIcon />
+            </Fab>
+          </div>
         </Container>
   );
 }
 
 
 const mapStateToProps = (state) => {
-
   return {
     blogList: state.blogReducer.blogList,
     // error: state.employeeReducer.error,

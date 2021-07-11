@@ -124,6 +124,9 @@ export default function SearchAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+          {/* <div style={{'marginLeft':'auto'}}>
+            <IconButton color="inherit"><SearchIcon /></IconButton>
+          </div> */}
         </Toolbar>
       </AppBar>
     </div>

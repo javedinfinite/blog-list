@@ -2,7 +2,7 @@ import Actions from "../actionConstants/blogActionConstants";
 
 const initialState = {
   blogList: [],
-  selectedBlog: 0,
+  selectedBlog: { title: "This is dummy default", blogid: 8, content: "You got this content because you reloaded the browser", date: "12/7/2021" },
   totalPages: 0,
   totalBlogCount: 0,
   currentPage: 0,
@@ -24,8 +24,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: "",
-        blogList: action.payload.blogList.data || [],
-        selectedBlog: action.payload.blogList.data[0] || {},
+        blogList: action.payload.blogList || [],
+        selectedBlog: action.payload.blogList[0] || {},
         // totalPages: action.payload.blogList.totalPages,
         // totalBlogCount: action.payload.blogList.total,
         // currentPage: action.payload.blogList.currentPage,

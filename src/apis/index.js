@@ -1,44 +1,42 @@
 import axios from "axios";
 
+import { getData, addData } from "./indexDb";
+
 // const baseUrl = "https://safe-csv-uploader.herokuapp.com/";
 const baseUrl = "http://localhost:5000/";
 
+export const addBlogApi = async (title, content) => {
+  var today = new Date();
+  var year = today.getFullYear();
+  var mes = today.getMonth()+1;
+  var dia = today.getDate();
+  var date =dia+"/"+mes+"/"+year;
+  const myPromise = new Promise((resolve, reject) => {
+    resolve(
+      addData("blogs", {
+        title: title,
+        blogid: 8,
+        content: content,
+        date: date
+        ,
+      })
+    );
+  });
+  return myPromise;
+};
 
-//temporary data for API
+export const getBlogListApi = async (pageNumber, pageLimit, blogId) => {
+  const myPromise = new Promise((resolve, reject) => {
+    resolve(getData("blogs"));
+  });
 
- var blogListResponse = {
-  "data":  [1, 2, 3, 4, 5, 6, 7, 8, 9]
-}
-
-
-
-export const getBlogListApi = (pageNumber, pageLimit, blogId) => {
-  return blogListResponse
-  // return axios.get(
-  //   baseUrl +
-  //     "api/blogs?pageNumber=" +
-  //     pageNumber +
-  //     "&pageLimit=" +
-  //     pageLimit + 
-  //     "&employeeName=" + 
-  //     blogId
-  // );
+  return myPromise;
 };
 
 export const getBlogApi = (blogId) => {
-  return   {
-    "data":  blogId
-  } 
-  // return axios.get(
-  //   baseUrl +
-  //     "api/blogs?blogid=" + blogId
-  // );
-};
+  const myPromise = new Promise((resolve, reject) => {
+    resolve(getData("blogs", blogId));
+  });
 
-// export const uploadBlogApi = (formData) => {
-//   return axios.post(baseUrl + "api/blogs", formData, {
-//     headers: {
-//       "Content-Type": "multipart/form-data",
-//     },
-//   });
-// };
+  return myPromise;
+};

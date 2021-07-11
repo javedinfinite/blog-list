@@ -1,5 +1,5 @@
 import Actions from "../actionConstants/blogActionConstants";
-import { getBlogListApi, getBlogApi } from "../apis";
+import { getBlogListApi, getBlogApi, addBlogApi } from "../apis";
 
 export const getBlogList = (pageNumber, pageLimit, blogId='') => {
   return async (dispatch) => {
@@ -7,7 +7,8 @@ export const getBlogList = (pageNumber, pageLimit, blogId='') => {
 
     try {
       let response = await getBlogListApi(pageNumber, pageLimit, blogId);
-      // console.log("response..........."+response.data)
+      // console.log("response..........."+JSON.stringify(response))
+      // console.log("response..........."+ response[0].title)
       dispatch({
         type: Actions.BLOGLIST_RECEIVED,
         payload: { blogList: response },
@@ -22,15 +23,15 @@ export const getBlogList = (pageNumber, pageLimit, blogId='') => {
 };
 
 export const getBlog = (blogId) => {
-  console.log('from getBlog')
+  console.log("called single blog")
   return async (dispatch) => {
     dispatch({ type: Actions.BLOG_REQUESTED });
     try {
       let response = await getBlogApi(blogId);
-      console.log(response.data)
+      console.log("response from one blog..........."+JSON.stringify(response))
       dispatch({
         type: Actions.BLOG_RECEIVED,
-        payload: { blog: response.data },
+        payload: { blog: response },
       });
     } catch (e) {
       console.log("I am from error: ",e)
@@ -42,35 +43,17 @@ export const getBlog = (blogId) => {
   };
 };
 
-// export const uploadCsv = (formData) => {
-//   return async (dispatch) => {
-//     dispatch({ type: Actions.CSV_UPLOAD_REQUESTED });
-//     try {
-//       let response = await uploadCsvApi(formData);
-//       if (response.data.success)
-//         // window.location = window.location.origin + "/#/viewEmployees";
-//       dispatch({
-//         type: Actions.CSV_UPLOAD_RECEIVED,
-//         payload: { uploadStatus: response.data },
-//       });
-//     } catch (e) {
-//       dispatch({
-//         type: Actions.CSV_UPLOAD_ERROR,
-//         error: "API to upload employees is failed with error : " + e,
-//       });
-//     }
-//   };
-// };
+export const addBlog = (title, content) => {
+  return async (dispatch) => {
+    try {
+      let response = await addBlogApi(title, content);
+      
+ 
+    } catch (e) {
+      console.log("I am from error: ",e)
+ 
+    }
+  };
+};
 
-// export const setSearchKey = (searchKey) => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch({
-//         type: 'SET_SEARCH_KEY',
-//         payload: { searchKey: searchKey },
-//       });
-//     } catch (e) {
-//        console.log('something went wrong while setting search key')
-//     }
-//   };
-// };
+

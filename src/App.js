@@ -6,6 +6,7 @@ import SearchAppBar from './components/Appbar'
 import { Switch, Route, HashRouter, BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store'
+import Localbase from "localbase";
 
 import Error from './components/Error'
 import Bloglist from './components/bloglist';
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  const db = new Localbase("db");
   const classes = useStyles();
   return (
     <Provider store={store}> 
@@ -34,7 +36,7 @@ function App() {
     </Switch>
   </div>
   </HashRouter>
-  </Provider> 
+  </Provider > 
   );
 }
 
