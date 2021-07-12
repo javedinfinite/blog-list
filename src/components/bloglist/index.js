@@ -20,7 +20,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CreateBlog from "./CreateBlog"
 
 import {  connect, useDispatch } from 'react-redux'
-import { getBlogList, getBlog } from "../../actions/blogAction";
+import { getBlogList, getBlog, getBlogComments } from "../../actions/blogAction";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -87,6 +87,7 @@ function Bloglist(props) {
 
   const setSelectedBlog = (blogId) =>{
     dispatch(getBlog(blogId))
+    dispatch(getBlogComments(blogId))
   }
 
   if(loader)
@@ -98,7 +99,7 @@ function Bloglist(props) {
             <CreateBlog  open={openDialogue} toggleDialogue={toggleDialogue}/>
             <Grid container spacing={4}>
             {props.blogList.map((blog, index) => (
-              <Grid item key={blog.key} xs={12} sm={6} md={4}>
+              <Grid item key={blog.data.blogid} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
@@ -115,7 +116,7 @@ function Bloglist(props) {
                     
                   </CardContent>
                   <CardActions>
-                  <Button   color="primary" size="small" onClick={()=>setSelectedBlog(blog.key)} component={Link} to="/viewblog" autoFocus>
+                  <Button   color="primary" size="small" onClick={()=>setSelectedBlog(blog.data.blogid)} component={Link} to="/viewblog" autoFocus>
                       View   Blog
                     </Button>
                     <Typography>

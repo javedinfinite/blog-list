@@ -8,7 +8,8 @@ const initialState = {
   currentPage: 0,
   limit: 5,
   error: "",
-  searchKey:''
+  searchKey:'',
+  currentComment:{"blogid":"11ebe323f7f8f2a0b4e28bcd528850ed","comments":[]}
 };
 
 export default (state = initialState, action) => {
@@ -26,10 +27,6 @@ export default (state = initialState, action) => {
         error: "",
         blogList: action.payload.blogList || [],
         selectedBlog: action.payload.blogList[0] || {},
-        // totalPages: action.payload.blogList.totalPages,
-        // totalBlogCount: action.payload.blogList.total,
-        // currentPage: action.payload.blogList.currentPage,
-        // pageLimit: action.payload.blogList.limit,
       };
     case Actions.BLOGLIST_ERROR:
       return {
@@ -53,6 +50,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.error || "Something went wrong while fetching the blog",
+      };
+
+
+      case Actions.COMMENT_REQUESTED: 
+      return {
+        ...state,
+        error: action.error || "",
+      };
+    case Actions.COMMENT_RECEIVED:
+      return {
+        ...state,
+        currentComment: action.payload.currentComment,
+        error: "",
+      };
+    case Actions.COMMENT_ERROR:
+      return {
+        ...state,
+        error: action.error || "Something went wrong while fetching the comment",
       };
 
     default:

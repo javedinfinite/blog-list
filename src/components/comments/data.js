@@ -2,7 +2,7 @@
     "comments":[  
       {  
         "id":1,
-        "comment_text":"Hi from javed",
+        "text":"Hi from javed",
         "author":"javed",
         "post_id":1,
         "ancestry":null,
@@ -19,7 +19,7 @@
       },
       {  
         "id":2,
-        "comment_text":"hi from chanchal",
+        "text":"hi from chanchal",
         "author":"Chanchal",
         "post_id":1,
         "ancestry":null,
@@ -33,7 +33,7 @@
         "children":[  
           {  
             "id":3,
-            "comment_text":"hi from suraj",
+            "text":"hi from suraj",
             "author":"suraj",
             "post_id":1,
             "ancestry":"2",
@@ -47,7 +47,7 @@
             "children":[  
               {  
                 "id":4,
-                "comment_text":"hi from mustaf",
+                "text":"hi from mustaf",
                 "author":"Mustaf",
                 "post_id":1,
                 "ancestry":"2/3",
@@ -61,7 +61,7 @@
                 "children":[  
                   {  
                     "id":5,
-                    "comment_text":"hi from raja",
+                    "text":"hi from raja",
                     "author":"Raja",
                     "post_id":1,
                     "ancestry":"2/3/4",
@@ -84,7 +84,7 @@
       },
       {
         "id":6,
-        "comment_text":"hi from darshan",
+        "text":"hi from darshan",
         "author":"Darshan",
         "post_id":1,
         "ancestry":"2/3/4",

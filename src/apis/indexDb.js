@@ -13,6 +13,18 @@ const addData =   (dbName, data) => {
 
   }
 
+  const updateData =   (dbName, data) => {
+
+    let DBInstance = connectDb(dbName)
+
+    DBInstance.collection(dbName).doc({'blogid':data.blogid}).set(data)
+
+  }
+
+
+
+
+
 
   
 const getData = async (dbName, matchingObject='') => {
@@ -28,7 +40,7 @@ const getData = async (dbName, matchingObject='') => {
        
   }
 
-export{getData, addData}
+export{getData, addData, updateData}
 
  
 

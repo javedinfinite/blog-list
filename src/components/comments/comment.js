@@ -5,8 +5,8 @@ import Replycard from './Replycard'
 const Comment = (props) => {
     return (
         <div style={{marginLeft:'5%' }}>            
-            <Replycard author={props.comment.author} comment={props.comment.comment_text}/>
-            <Comments data={props.comment.children} />
+            <Replycard callme={props.callme} commentId={props.commentId} author={props.comment.author}   comment={props.comment.text}/>
+            <Comments callme={props.callme} data={props.comment.children}   />
         </div>
     );
 };

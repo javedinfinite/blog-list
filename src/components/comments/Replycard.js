@@ -39,12 +39,13 @@ export default function Replycard(props) {
   }
 
   const openReply = () =>{
+    console.log(props.author)
     setopenDialogue(true)
   }
 
   return (
     <Card className={classes.root}>
-      <ReplyDialog open={openDialogue} author={props.author} toggleDialogue={toggleDialogue} />
+      <ReplyDialog callme={props.callme} commentId={props.commentId} blogid={props.blogid} open={openDialogue} author={props.author} toggleDialogue={toggleDialogue} />
 
       <CardHeader
         avatar={
