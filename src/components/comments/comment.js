@@ -1,12 +1,11 @@
 import React from 'react';
 import Comments from '.';
+import Replycard from './Replycard'
 
 const Comment = (props) => {
     return (
-        <div style={{paddingLeft:'30px'}}>
-            
-            {/* {JSON.stringify(props.t)} */}
-            <p >{props.comment.author} says {props.comment.comment_text} </p>
+        <div style={{marginLeft:'5%' }}>            
+            <Replycard author={props.comment.author} comment={props.comment.comment_text}/>
             <Comments data={props.comment.children} />
         </div>
     );

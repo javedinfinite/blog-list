@@ -3,13 +3,10 @@ import {  connect, useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
+
 import Paper from '@material-ui/core/Paper';
 
-import Article from './Article'
+
 import Comments from '../comments'
 import Data from '../comments/data'
 
@@ -44,12 +41,7 @@ function BlogView(props) {
       <h1 style={{fontSize:'50px'   }}>This is article on topic {props.selectedBlog.title} </h1>
 
         <Grid container justify="center" spacing={spacing}>
-         <p>Articles are words that define a noun as specific or unspecific. Consider the following examples:
-
-After the long day, the cup of tea tasted particularly good.
-By using the article the, we’ve shown that it was one specific day that was long and one specific cup of tea that tasted good.
-After a long day, a cup of tea tastes particularly good.
-By using the article a, we’ve created a general statement, implying that any cup of tea would taste good after any long day.</p>
+         <p>{props.selectedBlog.content}</p>
         </Grid>
       </Grid>
 

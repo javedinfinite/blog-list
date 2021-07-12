@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  const db = new Localbase("db");
   const classes = useStyles();
   return (
     <Provider store={store}> 

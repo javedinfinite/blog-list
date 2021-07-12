@@ -55,12 +55,6 @@ export default (state = initialState, action) => {
         error: action.error || "Something went wrong while fetching the blog",
       };
 
-    // case 'SET_SEARCH_KEY':
-    //   return {
-    //     ...state,
-    //     error: action.error || "Something went wrong while uploading csv",
-    //     searchKey: action.payload.searchKey || ''
-    //   };
     default:
       return state;
   }
