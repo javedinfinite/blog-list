@@ -3,12 +3,11 @@ import {  connect, useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
 import Paper from '@material-ui/core/Paper';
-
-
+import Button from '@material-ui/core/Button';
 import Comments from '../comments'
 import Data from '../comments/data'
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,10 +28,23 @@ function BlogView(props) {
 
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
+  const [newComment, setNewComment] = React.useState('');
+  const [valid, SetValid] = React.useState(true);
 
-  const handleChange = (event) => {
-    setSpacing(Number(event.target.value));
+  const saveNewComment = () => {
+      if(newComment){
+        console.log(newComment)
+        //here call api endpoint to submit the reply
+        setNewComment('')
+        SetValid(true)
+      }
+      else{
+        SetValid(false)
+      }
+
   };
+
+ 
 
   if(props.selectedBlog)
   return (
@@ -47,6 +59,9 @@ function BlogView(props) {
 
         <Grid item xs={12}>
             <Paper className={classes.control}>
+       
+            <TextareaAutosize value={newComment} onChange={(e)=>setNewComment(e.target.value)} placeholder="Write a new comment here" style={{height:'70px', width:'50%', borderColor:valid?'':'red'}}/>
+            <Button onClick={saveNewComment} style={{marginLeft:'4%', marginBottom:'2%'}} color="primary" variant="contained">Send</Button>
             <Grid container>
                 <Grid item>
                     <Comments data = {Data.comments}/>

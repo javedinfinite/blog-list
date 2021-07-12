@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
      marginTop:'4%' 
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: '#3f51b5',
   },
 }));
 
@@ -49,7 +49,7 @@ export default function Replycard(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {props.author[0]}
           </Avatar>
         }
         action={
