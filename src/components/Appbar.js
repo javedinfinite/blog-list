@@ -8,8 +8,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 import { Link } from "react-router-dom";
 import _ from "lodash";
-// import { getAllEmployeesBypage, setSearchKey } from "../actions/employeeAction";
-// import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -68,11 +65,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchAppBar() {
   const classes = useStyles();
-
-  const searchMe = (event) => {
-    // debounce_fun(event.target.value);
-  };
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -93,18 +85,8 @@ export default function SearchAppBar() {
             color="inherit"
             aria-label="menu"
           >
-            BlogList
+            Blog List
           </IconButton>
-          {/* <IconButton
-            edge="start"
-            component={Link}
-            to="/viewblog"
-            style={{ marginRight: "2" }}
-            color="inherit"
-            aria-label="menu"
-          >
-            viewBlog
-          </IconButton> */}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -115,7 +97,7 @@ export default function SearchAppBar() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              onChange={searchMe}
+              // onChange={searchMe}
               inputProps={{ "aria-label": "search" }}
             />
           </div>

@@ -1,48 +1,31 @@
-
 import Localbase from "localbase";
- 
- 
-const connectDb = (dbName) =>{
-    return new Localbase(dbName);
-}
 
-const addData =   (dbName, data) => {
+const connectDb = (dbName) => {
+  return new Localbase(dbName);
+};
 
-    let DBInstance = connectDb(dbName)
-      DBInstance.collection(dbName).add(data);
+const addData = (dbName, data) => {
+  let DBInstance = connectDb(dbName);
+  DBInstance.collection(dbName).add(data);
+};
 
+const updateData = async (dbName, data) => {
+  let DBInstance = connectDb(dbName);
+
+  await DBInstance.collection(dbName).doc({ blogid: data.blogid }).set(data);
+};
+
+const getData = async (dbName, matchingObject = "") => {
+  let DBInstance = connectDb(dbName);
+  let myData = [];
+  if (matchingObject) {
+    myData = await DBInstance.collection(dbName)
+      .doc(matchingObject)
+      .get({ keys: true }); //{blogid: 1}
+    return myData;
   }
+  myData = await DBInstance.collection(dbName).get({ keys: true });
+  return myData;
+};
 
-  const updateData =   async (dbName, data) => {
-
-    let DBInstance = connectDb(dbName)
-
-    await DBInstance.collection(dbName).doc({'blogid':data.blogid}).set(data)
-
-  }
-
-
-
-
-
-
-  
-const getData = async (dbName, matchingObject='') => {
-
-    let DBInstance = connectDb(dbName)
-    let myData = []
-    if(matchingObject){
-      
-      myData = await DBInstance.collection(dbName).doc(matchingObject).get({ keys: true }) //{blogid: 1}
-      return myData
-    }
-    myData = await DBInstance.collection(dbName).get({ keys: true })
-    return myData
-       
-  }
-
-export{getData, addData, updateData}
-
- 
-
-   
+export { getData, addData, updateData };

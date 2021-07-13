@@ -1,27 +1,24 @@
 import { getData, addData, updateData } from "./indexDb";
-import Data from '../components/comments/temp'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const baseUrl = "http://localhost:5000/";
 
 export const addBlogApi = async (title, content) => {
-
-  const myblogid = uuidv4()
-  addData("comments",  {"blogid":myblogid,"comments":[]})
+  const myblogid = uuidv4();
+  addData("comments", { blogid: myblogid, comments: [] });
 
   var today = new Date();
   var year = today.getFullYear();
-  var mes = today.getMonth()+1;
+  var mes = today.getMonth() + 1;
   var dia = today.getDate();
-  var date =dia+"/"+mes+"/"+year;
+  var date = dia + "/" + mes + "/" + year;
   const myPromise = new Promise((resolve, reject) => {
     resolve(
       addData("blogs", {
         title: title,
         blogid: myblogid,
         content: content,
-        date: date
-        ,
+        date: date,
       })
     );
   });
@@ -38,7 +35,7 @@ export const getBlogListApi = async (pageNumber, pageLimit, blogId) => {
 
 export const getBlogApi = (blogid) => {
   const myPromise = new Promise((resolve, reject) => {
-    resolve(getData("blogs", {blogid}));
+    resolve(getData("blogs", { blogid }));
   });
 
   return myPromise;
@@ -46,85 +43,69 @@ export const getBlogApi = (blogid) => {
 
 export const getBlogCommentsApi = async (blogid) => {
 
-  console.log("from getBlogCommentsApi with latest load", blogid)
-     
-    const allBlogComments = await getData("comments", {blogid})
-    return allBlogComments;
+  const allBlogComments = await getData("comments", { blogid });
+  return allBlogComments;
 };
-
-
 
 export const addBlogCommentApi = async (name, comment, blogid) => {
+  let data = await getData("comments", { blogid });
 
-  let data = await getData("comments", {blogid})
-  
   var today = new Date();
   var year = today.getFullYear();
-  var mes = today.getMonth()+1;
+  var mes = today.getMonth() + 1;
   var dia = today.getDate();
-  var date =dia+"/"+mes+"/"+year;
+  var date = dia + "/" + mes + "/" + year;
   const myComment = {
     text: comment,
     author: name,
     id: uuidv4(),
     created_at: date,
-    children:[]
-  }
+    children: [],
+  };
 
-  data.comments.push(myComment)
-  await updateData("comments", data )
- 
+  data.comments.push(myComment);
+  await updateData("comments", data);
 };
 
-const  replyToAComment = (comment, id, data) => {
+const replyToAComment = (comment, id, data) => {
   let currentComment = comment;
 
-    if (currentComment.id == id) {
-        currentComment.children.push(data);
-        return;
-    }
+  if (currentComment.id == id) {
+    currentComment.children.push(data);
+    return;
+  }
 
-    if (currentComment.children && currentComment.children.length > 0) {
-        for (let i = 0; i < currentComment.children.length; i++) {
-            replyToAComment(currentComment.children[i], id, data);
-        }
+  if (currentComment.children && currentComment.children.length > 0) {
+    for (let i = 0; i < currentComment.children.length; i++) {
+      replyToAComment(currentComment.children[i], id, data);
     }
-}
+  }
+};
 
 export const addBlogNestedCommentApi = async (name, comment, id, blogid) => {
-
   var today = new Date();
   var year = today.getFullYear();
-  var mes = today.getMonth()+1;
+  var mes = today.getMonth() + 1;
   var dia = today.getDate();
-  var date =dia+"/"+mes+"/"+year;
+  var date = dia + "/" + mes + "/" + year;
   const myComment = {
     text: comment,
     author: name,
     id: uuidv4(),
     created_at: date,
-    children:[]
-  }
+    children: [],
+  };
 
-  let data = await getData("comments", {blogid})
-  data.comments.every(object => {
-    if(object.id==id){
-      console.log("id match found///////////////")
-      object.children.push(myComment)
-      return false
+  let data = await getData("comments", { blogid });
+  data.comments.every((object) => {
+    if (object.id == id) {
+      object.children.push(myComment);
+      return false;
+    } else {
+      replyToAComment(object, id, myComment);
     }
-    else{
-      replyToAComment(object, id, myComment)
-      console.log("replyToAComment object passed",object)
-    }
-    return true
+    return true;
   });
-  console.log("from addBlogNestedCommentApi whole comment and comment it", data, id)
 
-  await updateData("comments", data )
- 
+  await updateData("comments", data);
 };
-
-
-
-

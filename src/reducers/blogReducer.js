@@ -2,14 +2,19 @@ import Actions from "../actionConstants/blogActionConstants";
 
 const initialState = {
   blogList: [],
-  selectedBlog: { title: "This is dummy default", blogid: 8, content: "You got this content because you reloaded the browser", date: "12/7/2021" },
+  selectedBlog: {
+    title: "This is dummy default",
+    blogid: 8,
+    content: "You got this content because you reloaded the browser",
+    date: "12/7/2021",
+  },
   totalPages: 0,
   totalBlogCount: 0,
   currentPage: 0,
   limit: 5,
   error: "",
-  searchKey:'',
-  currentComment:{"blogid":"11ebe323f7f8f2a0b4e28bcd528850ed","comments":[]}
+  searchKey: "",
+  currentComment: { blogid: "11ebe323f7f8f2a0b4e28bcd528850ed", comments: [] },
 };
 
 export default (state = initialState, action) => {
@@ -31,11 +36,10 @@ export default (state = initialState, action) => {
     case Actions.BLOGLIST_ERROR:
       return {
         ...state,
-        error:
-          action.error || "Something went wrong while fetching blog list",
+        error: action.error || "Something went wrong while fetching blog list",
         isLoading: false,
       };
-    case Actions.BLOG_REQUESTED: 
+    case Actions.BLOG_REQUESTED:
       return {
         ...state,
         error: action.error || "",
@@ -52,8 +56,7 @@ export default (state = initialState, action) => {
         error: action.error || "Something went wrong while fetching the blog",
       };
 
-
-      case Actions.COMMENT_REQUESTED: 
+    case Actions.COMMENT_REQUESTED:
       return {
         ...state,
         error: action.error || "",
@@ -67,7 +70,8 @@ export default (state = initialState, action) => {
     case Actions.COMMENT_ERROR:
       return {
         ...state,
-        error: action.error || "Something went wrong while fetching the comment",
+        error:
+          action.error || "Something went wrong while fetching the comment",
       };
 
     default:

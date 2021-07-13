@@ -8,8 +8,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
-import { connect, useDispatch } from "react-redux";
-import { getBlogList, getBlog, addBlog } from "../../actions/blogAction";
+import { useDispatch } from "react-redux";
+import { getBlogList, addBlog } from "../../actions/blogAction";
 
 export default function CreateBlog(prop) {
   const [title, setTitle] = React.useState("");
@@ -19,25 +19,22 @@ export default function CreateBlog(prop) {
 
   const handleClose = () => {
     prop.toggleDialogue(false);
-    clearData()
+    clearData();
   };
 
-  const clearData = () =>{
-    setTitle('')
-    setContent('')
-    SetValid(true)
-  }
+  const clearData = () => {
+    setTitle("");
+    setContent("");
+    SetValid(true);
+  };
 
   const handleSave = () => {
-    if(title && content){
-        dispatch(addBlog(title, content))
-        dispatch(getBlogList())
-        prop.toggleDialogue(false);
-        clearData()
-    }
-    else
-        SetValid(false)
-
+    if (title && content) {
+      dispatch(addBlog(title, content));
+      dispatch(getBlogList());
+      prop.toggleDialogue(false);
+      clearData();
+    } else SetValid(false);
   };
 
   return (
@@ -49,12 +46,20 @@ export default function CreateBlog(prop) {
         aria-labelledby="customized-dialog-title"
       >
         <DialogTitle id="customized-dialog-title" style={{ color: "#3f51b5" }}>
-          Create New Blog  {valid?'':<span style={{color:'red', marginLeft:'4%'}}> Both title and content are mandatory</span>}
+          Create New Blog{" "}
+          {valid ? (
+            ""
+          ) : (
+            <span style={{ color: "red", marginLeft: "4%" }}>
+              {" "}
+              Both title and content are mandatory
+            </span>
+          )}
         </DialogTitle>
         <DialogContent>
           <TextField
             style={{}}
-            onChange={(e)=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             autoFocus
             margin="dense"
             id="name"
@@ -68,7 +73,7 @@ export default function CreateBlog(prop) {
           </DialogContentText>
 
           <TextareaAutosize
-            onChange={(e)=>setContent(e.target.value)}
+            onChange={(e) => setContent(e.target.value)}
             rowsMax={50}
             style={{ height: "30%", width: "90%", fontSize: "x-large" }}
             aria-label="maximum height"
