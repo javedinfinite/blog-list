@@ -68,11 +68,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchAppBar() {
   const classes = useStyles();
-//   const dispatch = useDispatch();
-//   var debounce_fun = _.debounce((searchKey) => {
-//     dispatch(getAllEmployeesBypage(1, 5, searchKey));
-//     dispatch(setSearchKey(searchKey));
-//   }, 1000);
 
   const searchMe = (event) => {
     // debounce_fun(event.target.value);
@@ -100,7 +95,7 @@ export default function SearchAppBar() {
           >
             BlogList
           </IconButton>
-          <IconButton
+          {/* <IconButton
             edge="start"
             component={Link}
             to="/viewblog"
@@ -109,7 +104,7 @@ export default function SearchAppBar() {
             aria-label="menu"
           >
             viewBlog
-          </IconButton>
+          </IconButton> */}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -124,9 +119,6 @@ export default function SearchAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          {/* <div style={{'marginLeft':'auto'}}>
-            <IconButton color="inherit"><SearchIcon /></IconButton>
-          </div> */}
         </Toolbar>
       </AppBar>
     </div>

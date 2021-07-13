@@ -6,11 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Comments from '../comments'
-// import Data from '../comments/data'
-import Data from '../comments/temp'
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import TextField from '@material-ui/core/TextField';
-import {addBlogComment, getBlogComments, addBlogNestedComment} from '../../actions/blogAction'
+import {addBlogComment, getBlogComments, addBlogNestedComment, getBlog} from '../../actions/blogAction'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +42,6 @@ function BlogView(props) {
 
   const saveNewComment = async() => {
       if(newComment && newName){
-        //here call api endpoint to submit the reply  
         await dispatch(addBlogComment(newName, newComment, props.selectedBlog.blogid))
         await dispatch(getBlogComments(props.selectedBlog.blogid))
  
@@ -59,11 +56,16 @@ function BlogView(props) {
 
   };
 
+  useEffect(()=>{
+    let blogid = window.location.href.substring(window.location.href.lastIndexOf("/") + 1)
+    dispatch(getBlog(blogid))
+    dispatch(getBlogComments(blogid))
+  }, [])
+
 
  
- console.log("I am rendered after comment..............")
+ console.log("I am rendered after comment..............",window.location.href.substring(window.location.href.lastIndexOf("/") + 1) )
 
-  // if(props.selectedBlog && props.currentComment)
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>

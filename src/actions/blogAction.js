@@ -71,12 +71,12 @@ export const getBlogComments = (blogid) => {
         });
        
       }
-      else{
-        dispatch({
-          type: Actions.COMMENT_RECEIVED,
-          payload: { currentComment: {"blogid":"11ebe323f7f8f2a0b4e28bcd528850ed","comments":[]} },
-        });
-      }
+      // else{
+      //   dispatch({
+      //     type: Actions.COMMENT_RECEIVED,
+      //     payload: { currentComment: {"blogid":"11ebe323f7f8f2a0b4e28bcd528850ed","comments":[]} },
+      //   });
+      // }
       console.log("response from getBlogComments..........."+JSON.stringify(response))
 
     } catch (e) {
@@ -94,22 +94,6 @@ export const addBlogComment = (name, comment, blogid) => {
   return async (dispatch) => {
     try {
             await addBlogCommentApi(name, comment, blogid);
-      // let response = await getBlogCommentsApi(blogid);
-      // console.log("from inside dispatch try after response............", response)
-      // if(response){
-      //   dispatch({
-      //     type: Actions.COMMENT_RECEIVED,
-      //     payload: { currentComment: response },
-      //   });
-       
-      // }
-      // else{
-      //   dispatch({
-      //     type: Actions.COMMENT_RECEIVED,
-      //     payload: { currentComment: {"blogid":"11ebe323f7f8f2a0b4e28bcd528850ed","comments":[]} },
-      //   });
-      // }
-      
     } catch (e) {
       console.log("I am from error: ",e)
  

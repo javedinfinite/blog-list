@@ -19,11 +19,9 @@ export default function ReplyDialog(props) {
 
   const saveReply = () => {
       if(newName && reply){
-        //here call api endpoint to submit the reply
         console.log("from reply dialog", props.blogid)
         props.callme(newName, reply, props.commentId)
-        // dispatch(addBlogNestedComment(newName, reply, props.commentId, props.blogid))
-        // getBlogComments(props.blogid)
+
         props.toggleDialogue(false)
         setReply('')
         SetValid(true)

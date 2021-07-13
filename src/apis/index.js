@@ -45,6 +45,8 @@ export const getBlogApi = (blogid) => {
 };
 
 export const getBlogCommentsApi = async (blogid) => {
+
+  console.log("from getBlogCommentsApi with latest load", blogid)
      
     const allBlogComments = await getData("comments", {blogid})
     return allBlogComments;
