@@ -37,19 +37,17 @@ function BlogView(props) {
   const [valid, SetValid] = React.useState(true);
   const dispatch = useDispatch();
 
-  const saveNestedComment = (name,reply, commentId) =>{
-    dispatch(addBlogNestedComment(name, reply, commentId, props.selectedBlog.blogid))
-    dispatch(getBlogComments(props.selectedBlog.blogid))
-    // console.log('saveNestedComment....', props.selectedBlog.blogid, name, reply, commentId)
+  const saveNestedComment = async (name,reply, commentId) =>{
+    await dispatch(addBlogNestedComment(name, reply, commentId, props.selectedBlog.blogid))
+    await dispatch(getBlogComments(props.selectedBlog.blogid))
   }
 
-  const saveNewComment = () => {
+  const saveNewComment = async() => {
       if(newComment && newName){
-        console.log(newName)
         //here call api endpoint to submit the reply  
-        dispatch(addBlogComment(newName, newComment, props.selectedBlog.blogid))
+        await dispatch(addBlogComment(newName, newComment, props.selectedBlog.blogid))
+        await dispatch(getBlogComments(props.selectedBlog.blogid))
  
-        dispatch(getBlogComments(props.selectedBlog.blogid))
 
         setNewComment('')
         setNewName('')
@@ -63,7 +61,7 @@ function BlogView(props) {
 
 
  
- 
+ console.log("I am rendered after comment..............")
 
   // if(props.selectedBlog && props.currentComment)
   return (
@@ -96,11 +94,12 @@ function BlogView(props) {
 
 
 const mapStateToProps = (state) => {
-  console.log("selectedBlog................",state.blogReducer.selectedBlog)
+  console.log("currentComment................",state.blogReducer.currentComment)
     return {
         selectedBlog: state.blogReducer.selectedBlog,      
         currentComment: state.blogReducer.currentComment,      
     };
   };
+
   
-  export default connect(mapStateToProps)(BlogView);
+export default connect(mapStateToProps)(BlogView);

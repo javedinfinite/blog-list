@@ -44,12 +44,10 @@ export const getBlogApi = (blogid) => {
   return myPromise;
 };
 
-export const getBlogCommentsApi = (blogid) => {
-  const myPromise = new Promise((resolve, reject) => {
-    resolve(getData("comments", {blogid}));
-  });
-
-  return myPromise;
+export const getBlogCommentsApi = async (blogid) => {
+     
+    const allBlogComments = await getData("comments", {blogid})
+    return allBlogComments;
 };
 
 
@@ -72,13 +70,24 @@ export const addBlogCommentApi = async (name, comment, blogid) => {
   }
 
   data.comments.push(myComment)
-  const myPromise = new Promise((resolve, reject) => {
-    resolve(
-      updateData("comments", data )
-    );
-  });
-  return myPromise;
+  await updateData("comments", data )
+ 
 };
+
+const  replyToAComment = (comment, id, data) => {
+  let currentComment = comment;
+
+    if (currentComment.id == id) {
+        currentComment.children.push(data);
+        return;
+    }
+
+    if (currentComment.children && currentComment.children.length > 0) {
+        for (let i = 0; i < currentComment.children.length; i++) {
+            replyToAComment(currentComment.children[i], id, data);
+        }
+    }
+}
 
 export const addBlogNestedCommentApi = async (name, comment, id, blogid) => {
 
@@ -102,17 +111,16 @@ export const addBlogNestedCommentApi = async (name, comment, id, blogid) => {
       object.children.push(myComment)
       return false
     }
+    else{
+      replyToAComment(object, id, myComment)
+      console.log("replyToAComment object passed",object)
+    }
     return true
   });
-  console.log("from addBlogNestedCommentApi ", data, id)
+  console.log("from addBlogNestedCommentApi whole comment and comment it", data, id)
 
-
-  const myPromise = new Promise((resolve, reject) => {
-    resolve(
-      updateData("comments", data )
-    );
-  });
-  return myPromise;
+  await updateData("comments", data )
+ 
 };
 
 

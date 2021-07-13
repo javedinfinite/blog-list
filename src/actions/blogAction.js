@@ -58,9 +58,12 @@ export const addBlog = (title, content) => {
 export const getBlogComments = (blogid) => {
   console.log("blogid obtained in getBlogComments function........", blogid)
   return async (dispatch) => {
+   
     dispatch({ type: Actions.COMMENT_REQUESTED });
     try {
+      console.log("from inside dispatch try............")
       let response = await getBlogCommentsApi(blogid);
+      console.log("from inside dispatch try after response............", response)
       if(response){
         dispatch({
           type: Actions.COMMENT_RECEIVED,
@@ -77,6 +80,7 @@ export const getBlogComments = (blogid) => {
       console.log("response from getBlogComments..........."+JSON.stringify(response))
 
     } catch (e) {
+      console.log("error from getall comments.........", e)
       dispatch({
         type: Actions.COMMENT_ERROR,
         error: "API to get comments is failed with error : " + e,
@@ -89,7 +93,22 @@ export const getBlogComments = (blogid) => {
 export const addBlogComment = (name, comment, blogid) => {
   return async (dispatch) => {
     try {
-      let response = await addBlogCommentApi(name, comment, blogid);
+            await addBlogCommentApi(name, comment, blogid);
+      // let response = await getBlogCommentsApi(blogid);
+      // console.log("from inside dispatch try after response............", response)
+      // if(response){
+      //   dispatch({
+      //     type: Actions.COMMENT_RECEIVED,
+      //     payload: { currentComment: response },
+      //   });
+       
+      // }
+      // else{
+      //   dispatch({
+      //     type: Actions.COMMENT_RECEIVED,
+      //     payload: { currentComment: {"blogid":"11ebe323f7f8f2a0b4e28bcd528850ed","comments":[]} },
+      //   });
+      // }
       
     } catch (e) {
       console.log("I am from error: ",e)

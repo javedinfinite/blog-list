@@ -13,11 +13,11 @@ const addData =   (dbName, data) => {
 
   }
 
-  const updateData =   (dbName, data) => {
+  const updateData =   async (dbName, data) => {
 
     let DBInstance = connectDb(dbName)
 
-    DBInstance.collection(dbName).doc({'blogid':data.blogid}).set(data)
+    await DBInstance.collection(dbName).doc({'blogid':data.blogid}).set(data)
 
   }
 
@@ -32,7 +32,8 @@ const getData = async (dbName, matchingObject='') => {
     let DBInstance = connectDb(dbName)
     let myData = []
     if(matchingObject){
-      myData = DBInstance.collection(dbName).doc(matchingObject).get({ keys: true }) //{blogid: 1}
+      
+      myData = await DBInstance.collection(dbName).doc(matchingObject).get({ keys: true }) //{blogid: 1}
       return myData
     }
     myData = await DBInstance.collection(dbName).get({ keys: true })
