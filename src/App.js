@@ -11,6 +11,7 @@ import BlogView from "./components/blogview";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    overflow:'hidden'
   },
 }));
 
